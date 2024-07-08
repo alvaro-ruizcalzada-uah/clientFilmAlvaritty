@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>FilmAlvaritty | Gestión de películas</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+</head>
+<body>
+
+<div class="container">
+
+    <div class="card">
+        <h2 th:text="${mainTitle}" class="card-header"></h2>
+        <div class="card-body">
+            <div th:if="${msg != null}" class='alert alert-success' th:text="${msg}" role='alert'></div>
+            <table class="table table-hover">
+                <thead class="thead-light">
+                <tr>
+                    <th scope="col">Identificador</th>
+                    <th scope="col">Título</th>
+                    <th scope="col">Género</th>
+                    <th scope="col">Duración(min)</th>
+                    <th scope="col">Año</th>
+                    <th scope="col">País</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="film : ${listFilms}">
+                    <td th:text="${film.idFilm}"></td>
+                    <td th:text="${film.title}"></td>
+                    <td th:text="${film.genre}"></td>
+                    <td th:text="${film.runningTime}"></td>
+                    <td th:text="${film.year}"></td>
+                    <td th:text="${film.country}"></td>
+                    <td>
+                        <a th:href="@{/filmAlvaritty/edit/{id}  (id=${film.idFilm})  }" th:text="'editar'" class="btn btn-success btn-sm" role="button" title="Editar la película."><i class="fas fa-pencil-alt" aria-hidden="true"></i></a>
+                        <a th:href="@{/filmAlvaritty/delete/{id}  (id=${film.idFilm})   }" th:text="'borrar'" onclick="return confirm('¿Estas seguro?')" class="btn btn-danger btn-sm" role="button" title="Eliminar la película."><i class="fas fa-trash" aria-hidden="true"></i></a>
+                    </td>
+                </tr>
+
+                </tbody>
+            </table>
+
+            <nav th:replace="paginator-nav :: paginator"></nav>
+
+        </div>
+    </div>
+    <hr>
+    <a class="btn btn-primary" role="button" th:href="@{/filmAlvaritty/}">Ir a Inicio</a>
+</div> <!-- /container -->
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script th:src="@{/js/bootstrap.min.js}"></script>
+
+</body>
+</html>
