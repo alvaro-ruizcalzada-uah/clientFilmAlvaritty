@@ -12,6 +12,7 @@ public interface IFilmsService {
     Film findFilmById(Integer idFilm);
     Page<Film> findFilmsByTitle(String title, Pageable pageable);
     Page<Film> findFilmsByGenre(String genre, Pageable pageable);
+    Page<Film> findFilmsByCast(String actor, Pageable pageable);
     void saveFilm(Film film);
     void deleteFilm(Integer idFilm);
 

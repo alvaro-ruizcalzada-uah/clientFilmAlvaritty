@@ -8,7 +8,7 @@
 <body>
 <div class="container">
     <h2 class="text-secondary border border-success border-top-0 border-left-0 border-right-0">Búsqueda de películas</h2>
-    <form th:action="@{/filmAlvaritty/title}" method="get">
+    <form th:action="@{/filmAlvaritty/films/title}" method="get">
         <div class="mb-3">
             <label for="title" class="form-label">Título</label>
             <input type="text" class="form-control" id="title" name="title"
@@ -17,7 +17,7 @@
         <button type="submit" class="btn btn-success">Buscar por Título</button>
     </form>
     <hr>
-    <form th:action="@{/filmAlvaritty/genre}" method="get">
+    <form th:action="@{/filmAlvaritty/films/genre}" method="get">
         <div class="mb-3">
             <select class="form-select" name="genre" id="genre">
                 <option th:value="enum" disabled selected>Seleccione un género</option>
@@ -33,7 +33,15 @@
         </div>
         <button type="submit" class="btn btn-success">Buscar por Género</button>
     </form>
-
+    <hr>
+    <form th:action="@{/filmAlvaritty/films/actor}" method="get">
+        <div class="mb-3">
+            <label for="actor" class="form-label">Actor</label>
+            <input type="text" class="form-control" id="actor" name="actor"
+                   placeholder="Escriba el nombre del actor">
+        </div>
+        <button type="submit" class="btn btn-success">Buscar por Actor</button>
+    </form>
     <hr>
     <a class="btn btn-primary" role="button" th:href="@{/filmAlvaritty}">Ir a Inicio</a>
 </div>

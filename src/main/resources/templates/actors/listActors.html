@@ -17,24 +17,20 @@
                 <thead class="thead-light">
                 <tr>
                     <th scope="col">Identificador</th>
-                    <th scope="col">Título</th>
-                    <th scope="col">Género</th>
-                    <th scope="col">Duración(min)</th>
-                    <th scope="col">Año</th>
-                    <th scope="col">País</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Fecha nacimiento</th>
+                    <th scope="col">País de origen</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="film : ${listFilms}">
-                    <td th:text="${film.idFilm}"></td>
-                    <td th:text="${film.title}"></td>
-                    <td th:text="${film.genre}"></td>
-                    <td th:text="${film.runningTime}"></td>
-                    <td th:text="${film.year}"></td>
-                    <td th:text="${film.country}"></td>
+                <tr th:each="actor : ${listActors}">
+                    <td th:text="${actor.idActor}"></td>
+                    <td th:text="${actor.name}"></td>
+                    <td th:text="${actor.birthday}"></td>
+                    <td th:text="${actor.country}"></td>
                     <td>
-                        <a th:href="@{/filmAlvaritty/films/edit/{id}  (id=${film.idFilm})  }" th:text="'editar'" class="btn btn-success btn-sm" role="button" title="Editar la película."><i class="fas fa-pencil-alt" aria-hidden="true"></i></a>
-                        <a th:href="@{/filmAlvaritty/films/delete/{id}  (id=${film.idFilm})   }" th:text="'borrar'" onclick="return confirm('¿Estas seguro?')" class="btn btn-danger btn-sm" role="button" title="Eliminar la película."><i class="fas fa-trash" aria-hidden="true"></i></a>
+                        <a th:href="@{/filmAlvaritty/actors/edit/{id}  (id=${actor.idActor})  }" th:text="'editar'" class="btn btn-success btn-sm" role="button" title="Editar el actor."><i class="fas fa-pencil-alt" aria-hidden="true"></i></a>
+                        <a th:href="@{/filmAlvaritty/actors/delete/{id}  (id=${actor.idActor})   }" th:text="'borrar'" onclick="return confirm('¿Estas seguro?')" class="btn btn-danger btn-sm" role="button" title="Eliminar el actor."><i class="fas fa-trash" aria-hidden="true"></i></a>
                     </td>
                 </tr>
 

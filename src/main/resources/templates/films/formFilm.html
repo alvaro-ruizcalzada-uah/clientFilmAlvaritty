@@ -28,7 +28,7 @@
 <div class="container">
     <h2 th:text="${mainTitle}"
         class="text-secondary border border-success border-top-0 border-left-0 border-right-0"></h2>
-    <form th:action="@{/filmAlvaritty/save/}" method="post" th:object="${film}" enctype="multipart/form-data">
+    <form th:action="@{/filmAlvaritty/films/save/}" method="post" th:object="${film}" enctype="multipart/form-data">
         <div th:if="${#fields.hasErrors('*')}" class='alert alert-danger' role='alert'>
             Por favor, corrija los siguientes errores:
             <ul>

@@ -60,6 +60,13 @@ public class FilmsServiceImpl implements IFilmsService{
     }
 
     @Override
+    public Page<Film> findFilmsByCast(String actor, Pageable pageable) {
+        Film[] films = template.getForObject(URL + "/actor/" + actor, Film[].class);
+        List<Film> list = Arrays.asList(films);
+        return new PageImpl<>(list, pageable, list.size());
+    }
+
+    @Override
     public void saveFilm(Film film) {
         if (film.getIdFilm() != null && film.getIdFilm() > 0) {
             template.put(URL, film);

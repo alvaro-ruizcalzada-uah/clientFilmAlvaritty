@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>FilmAlvaritty | Gestión de películas</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <h2 class="text-secondary border border-success border-top-0 border-left-0 border-right-0">Búsqueda de actores</h2>
+    <form th:action="@{/filmAlvaritty/actors/name}" method="get">
+        <div class="mb-3">
+            <label for="name" class="form-label">Título</label>
+            <input type="text" class="form-control" id="name" name="name"
+                   placeholder="Escriba el nombre del actor">
+        </div>
+        <button type="submit" class="btn btn-success">Buscar por Nombre</button>
+    </form>
+    <hr>
+    <a class="btn btn-primary" role="button" th:href="@{/filmAlvaritty}">Ir a Inicio</a>
+</div>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script th:src="@{/js/bootstrap.min.js}"></script>
+
+</body>
+</html>
