@@ -10,7 +10,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.io.IOException;
+
+import static org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE;
 
 @AllArgsConstructor
 @Controller
@@ -38,7 +43,7 @@ public class FilmsController {
     }
 
     @GetMapping("/list")
-    public String listFilms(Model model, @RequestParam(name="page", defaultValue="0") int page) {
+    public String listFilms(Model model, @RequestParam(name = "page", defaultValue = "0") int page) {
         Pageable pageable = PageRequest.of(page, 5);
         Page<Film> list = filmsService.findAll(pageable);
         PageRender<Film> pageRender = new PageRender<Film>("/filmAlvaritty/list", list);
@@ -56,8 +61,8 @@ public class FilmsController {
     }
 
     @GetMapping("/title")
-    public String searchFilmsByTitle(Model model, @RequestParam(name="page",
-            defaultValue="0") int page, @RequestParam("title") String title) {
+    public String searchFilmsByTitle(Model model, @RequestParam(name = "page",
+            defaultValue = "0") int page, @RequestParam("title") String title) {
         Pageable pageable = PageRequest.of(page, 5);
         Page<Film> list;
         if (title.isEmpty()) {
@@ -73,8 +78,8 @@ public class FilmsController {
     }
 
     @GetMapping("/genre")
-    public String searchFilmsByGenre(Model model, @RequestParam(name="page",
-            defaultValue="0") int page, @RequestParam("genre") String genre) {
+    public String searchFilmsByGenre(Model model, @RequestParam(name = "page",
+            defaultValue = "0") int page, @RequestParam("genre") String genre) {
         Pageable pageable = PageRequest.of(page, 5);
         Page<Film> list;
         if (genre.isEmpty() || genre.equals("enum")) {
@@ -89,8 +94,12 @@ public class FilmsController {
         return "films/listFilms";
     }
 
-    @PostMapping("/save/")
-    public String saveFilm(Model model, Film film, RedirectAttributes attributes) {
+    @PostMapping(value="/save/", consumes = MULTIPART_FORM_DATA_VALUE)
+    public String saveFilm(Model model, Film film, @RequestParam(value="posterInput",required = false) MultipartFile
+            posterFile, RedirectAttributes attributes) throws IOException {
+        if (posterFile != null && !posterFile.isEmpty()) {
+            film.setPoster(posterFile.getBytes());
+        }
         filmsService.saveFilm(film);
         model.addAttribute("mainTitle", "Nueva película");
         attributes.addFlashAttribute("msg", "La película se ha creado correctamente.");

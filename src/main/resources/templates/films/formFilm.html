@@ -4,65 +4,91 @@
     <meta charset="UTF-8">
     <title>FilmAlvaritty | Gestión de películas</title>
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <style>
+        .form-container {
+            display: flex;
+        }
+        .form-fields, .poster-preview {
+            flex: 1;
+            padding: 10px;
+        }
+        .poster-preview {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #posterPreview {
+            max-width: 100%;
+            max-height: 100%;
+        }
+    </style>
 </head>
 <body>
 
 <div class="container">
     <h2 th:text="${mainTitle}"
         class="text-secondary border border-success border-top-0 border-left-0 border-right-0"></h2>
-    <form th:action="@{/filmAlvaritty/save/}" method="post" th:object="${film}">
+    <form th:action="@{/filmAlvaritty/save/}" method="post" th:object="${film}" enctype="multipart/form-data">
         <div th:if="${#fields.hasErrors('*')}" class='alert alert-danger' role='alert'>
-            Por favor, corrija los siguientes errores::
+            Por favor, corrija los siguientes errores:
             <ul>
                 <li th:each="err : ${#fields.errors('*')}" th:text="${err}"/>
             </ul>
         </div>
-        <div class="mb-3">
-            <label for="title" class="form-label">Títiulo</label>
-            <input type="text" class="form-control" th:field="*{title}" id="title" name="title"
-                   placeholder="El título de la película" required="required">
+        <div class="form-container">
+            <div class="form-fields">
+                <div class="mb-3">
+                    <label for="title" class="form-label">Título</label>
+                    <input type="text" class="form-control" th:field="*{title}" id="title" name="title"
+                           placeholder="El título de la película" required="required">
+                </div>
+                <div class="mb-3">
+                    <label for="year" class="form-label">Año de estreno</label>
+                    <input type="number" class="form-control" th:field="*{year}" id="year" name="year"
+                           placeholder="El año de estreno de la película" required="required" min="0">
+                </div>
+                <div class="mb-3">
+                    <label for="runningTime" class="form-label">Duración (min)</label>
+                    <input type="number" class="form-control" th:field="*{runningTime}" id="runningTime" name="runningTime"
+                           placeholder="La duración de la película en minutos" required="required" min="0">
+                </div>
+                <div class="mb-3">
+                    <label for="country" class="form-label">País de origen</label>
+                    <input type="text" class="form-control" th:field="*{country}" id="country" name="country"
+                           placeholder="El país de origen de la película" required="required">
+                </div>
+                <div class="mb-3">
+                    <label for="director" class="form-label">Director</label>
+                    <input type="text" class="form-control" th:field="*{director}" id="director" name="director"
+                           placeholder="El director principal de la película" required="required">
+                </div>
+                <div class="mb-3">
+                    <label for="genre" class="form-label">Género</label>
+                    <select class="form-select" th:field="*{genre}" name="genre" id="genre">
+                        <option th:value="enum" disabled selected>Seleccione un género</option>
+                        <option th:value="Acción">Acción</option>
+                        <option th:value="Comedia">Comedia</option>
+                        <option th:value="Drama">Drama</option>
+                        <option th:value="Horror">Horror</option>
+                        <option th:value="Romance">Romance</option>
+                        <option th:value="Fantasía">Fantasía</option>
+                        <option th:value="Documental">Documental</option>
+                        <option th:value="Intriga">Intriga</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="synopsis" class="form-label">Sinopsis</label>
+                    <textarea class="form-control" id="synopsis" name="synopsis" th:field="*{synopsis}"
+                              placeholder="Sinopsis de la película"></textarea>
+                </div>
+            </div>
+            <div class="poster-preview">
+                <img id="posterPreview" th:src="'data:image/jpeg;base64,' + ${film.generateBase64Image()}" alt="Póster de la película">
+            </div>
         </div>
         <div class="mb-3">
-            <label for="year" class="form-label">Año de estreno</label>
-            <input type="number" class="form-control" th:field="*{year}" id="year" name="year"
-                   placeholder="El año de estreno de la película" required="required">
-        </div>
-        <div class="mb-3">
-            <label for="runningTime" class="form-label">Duración (min)</label>
-            <input type="number" class="form-control" th:field="*{runningTime}" id="runningTime" name="runningTime"
-                   placeholder="La duración de la película en minutos" required="required" min="0">
-        </div>
-        <div class="mb-3">
-            <label for="country" class="form-label">País de origen</label>
-            <input type="text" class="form-control" th:field="*{country}" id="country" name="country"
-                   placeholder="El país de origen de la película" required="required">
-        </div>
-        <div class="mb-3">
-            <label for="director" class="form-label">Director</label>
-            <input type="text" class="form-control" th:field="*{director}" id="director" name="director"
-                   placeholder="El director principal de la película" required="required">
-        </div>
-        <div class="mb-3">
-            <select class="form-select" th:field="*{genre}" name="genre" id="genre">
-                <option th:value="enum" disabled selected>Seleccione un género</option>
-                <option th:value="Acción">Acción</option>
-                <option th:value="Comedia">Comedia</option>
-                <option th:value="Drama">Drama</option>
-                <option th:value="Horror">Horror</option>
-                <option th:value="Romance">Romance</option>
-                <option th:value="Fantasía">Fantasía</option>
-                <option th:value="Documental">Documental</option>
-                <option th:value="Intriga">Intriga</option>
-            </select>
-        </div>
-        <div class="mb-3">
-            <textarea class="form-select" id="synopsis" name="synopsis" th:field="*{synopsis}">
-                Sinopsis de la película
-            </textarea>
-        </div>
-        <div class="mb-3">
-            <label for="poster" class="form-label">Poster de la película</label>
-            <input type="file" class="form-control" th:field="*{poster}" id="poster" name="poster"  accept="image/*">
+            <label for="posterInput" class="form-label">Subir póster de la película</label>
+            <input type="file" class="form-control" id="posterInput" name="posterInput" accept="image/*" onchange="previewImage(event)">
         </div>
         <button type="submit" class="btn btn-dark">Guardar</button>
         <input type="hidden" th:field="*{idFilm}" />
@@ -75,6 +101,16 @@
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
 <script th:src="@{/js/bootstrap.min.js}"></script>
+<script>
+    function previewImage(event) {
+        var reader = new FileReader();
+        reader.onload = function(){
+            var output = document.getElementById('posterPreview');
+            output.src = reader.result;
+        };
+        reader.readAsDataURL(event.target.files[0]);
+    }
+</script>
 
 </body>
 </html>
