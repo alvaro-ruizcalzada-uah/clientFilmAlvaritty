@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>FilmAlvaritty | Gestión de películas</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+</head>
+<body>
+
+<div class="container">
+    <h2 th:text="${mainTitle}"
+        class="text-secondary border border-success border-top-0 border-left-0 border-right-0"></h2>
+    <form th:action="@{/creviews/save/}" method="post" th:object="${review}">
+        <div th:if="${#fields.hasErrors('*')}" class='alert alert-danger' role='alert'>
+            Por favor corrija los siguientes errores:
+            <ul>
+                <li th:each="err : ${#fields.errors('*')}" th:text="${err}"/>
+            </ul>
+        </div>
+        <div class="mb-3">
+            <label for="idFilm" class="form-label">Identificador película</label>
+            <input type="text" class="form-control" th:field="*{idFilm}" id="idFilm" name="idFilm"
+                   placeholder="Escriba el identificador de la película" required="required">
+        </div>
+        <div class="mb-3">
+            <label for="idFilm" class="form-label">Puntuación</label>
+            <input type="number" class="form-control" th:field="*{rating}" id="rating" name="rating"
+                   min=0 max=10 placeholder="Escriba la puntuación que le das a la película" required="required">
+        </div>
+        <div class="mb-3">
+            <label for="opinion" class="form-label">Comentario</label>
+            <input type="text" class="form-control" th:field="*{opinion}" id="opinion" name="opinion"
+                   placeholder="Escriba el comentario sobre la película la película" required="required">
+        </div>
+        <button type="submit" class="btn btn-dark">Guardar</button>
+        <input type="hidden" th:field="*{idReview}"/>
+    </form>
+    <hr>
+    <a class="btn btn-primary" role="button" th:href="@{/filmAlvaritty/}">Ir a Inicio</a>
+</div>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script th:src="@{/js/bootstrap.min.js}"></script>
+
+</body>
+</html>

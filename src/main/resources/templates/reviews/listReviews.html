@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>FilmAlvaritty | Gestión de películas</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+</head>
+<body>
+
+<div class="container">
+
+    <div class="card">
+        <h2 th:text="${mainTitle}" class="card-header"></h2>
+        <div class="card-body">
+            <div th:if="${msg != null}" class='alert alert-success' th:text="${msg}" role='alert'></div>
+            <h4 class="card-title">
+                <a th:href="@{/creviews/new}" class="btn btn-primary btn-xs">Crear nueva crítica</a>
+                <a th:href="@{/creviews/list/currentUser}" class="btn btn-primary btn-xs">Ver tus críticas</a>
+            </h4>
+            <table class="table table-hover">
+                <thead class="thead-light">
+                <tr>
+                    <th scope="col">Identificador</th>
+                    <th scope="col">Puntuación</th>
+                    <th scope="col">Comentario</th>
+                    <th scope="col">Fecha</th>
+                    <th sec:authorize="hasRole('ROLE_ADMIN')" scope="col">Usuario</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="review : ${listReviews}">
+                    <td th:text="${review.idReview}"></td>
+                    <td th:text="${review.rating}"></td>
+                    <td th:text="${review.opinion}"></td>
+                    <td th:text="${review.date}"></td>
+                    <td sec:authorize="hasRole('ROLE_ADMIN')" th:text="${review.user.idUsuario}"></td>
+
+                    <td>
+                        <a th:href="@{/creviews/delete/{id}  (id=${review.idReview})   }" th:text="'borrar'" onclick="return confirm('¿Estas seguro?')" class="btn btn-danger btn-sm" role="button" title="Eliminar crítica."><i class="fas fa-trash" aria-hidden="true"></i></a>
+                    </td>
+                </tr>
+
+                </tbody>
+            </table>
+
+            <nav th:replace="paginator-nav :: paginator"></nav>
+
+        </div>
+    </div>
+    <hr>
+    <a class="btn btn-primary" role="button" th:href="@{/filmAlvaritty/}">Ir a Inicio</a>
+</div> <!-- /container -->
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script th:src="@{/js/bootstrap.min.js}"></script>
+
+</body>
+</html>

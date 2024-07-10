@@ -1,8 +1,10 @@
 package es.uah.clientFilmAlvaritty.controller;
 
 import es.uah.clientFilmAlvaritty.model.Film;
+import es.uah.clientFilmAlvaritty.model.Review;
 import es.uah.clientFilmAlvaritty.paginator.PageRender;
 import es.uah.clientFilmAlvaritty.service.IFilmsService;
+import es.uah.clientFilmAlvaritty.service.IReviewsService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -14,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
+import java.util.List;
 
 import static org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE;
 
@@ -23,6 +26,8 @@ import static org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE;
 public class FilmsController {
 
     private IFilmsService filmsService;
+
+    private IReviewsService reviewsService;
 
     @GetMapping(value = {"/", "/home", ""})
     public String home(Model model) {
@@ -58,6 +63,17 @@ public class FilmsController {
         Film film = filmsService.findFilmById(idFilm);
         model.addAttribute("film", film);
         return "films/formFilm";
+    }
+
+    @GetMapping("/films/details/{id}")
+    public String seeFilmById(Model model, @PathVariable("id") Integer idFilm) {
+        Film film = filmsService.findFilmById(idFilm);
+        Double averageRating = reviewsService.calculateAverageRating(idFilm);
+        List<Review> reviewList = reviewsService.findReviewsByIdFilm(idFilm);
+        model.addAttribute("film", film);
+        model.addAttribute("averageRating", String.format("%.2f", averageRating));
+        model.addAttribute("reviewList", reviewList);
+        return "films/seeFilm";
     }
 
     @GetMapping("/films/title")
