@@ -19,11 +19,11 @@ public class ActorsServiceImpl implements IActorsService {
 
     private RestTemplate template;
 
-    private static String URL = "http://localhost:8080/api/actors";
+    private final String url = "http://localhost:8090/api/films/actors";
 
     @Override
     public Page<Actor> findAll(Pageable pageable) {
-        Actor[] films = template.getForObject(URL, Actor[].class);
+        Actor[] films = template.getForObject(url, Actor[].class);
         List<Actor> filmsList = Arrays.asList(films);
         int pageSize = pageable.getPageSize();
         int currentPage = pageable.getPageNumber();
@@ -40,13 +40,13 @@ public class ActorsServiceImpl implements IActorsService {
 
     @Override
     public Actor findActorById(Integer idActor) {
-        return template.getForObject(URL + "/" + idActor, Actor.class);
+        return template.getForObject(url + "/" + idActor, Actor.class);
 
     }
 
     @Override
     public Page<Actor> findActorsByName(String name, Pageable pageable) {
-        Actor[] films = template.getForObject(URL + "/name/" + name, Actor[].class);
+        Actor[] films = template.getForObject(url + "/name/" + name, Actor[].class);
         List<Actor> list = Arrays.asList(films);
         return new PageImpl<>(list, pageable, list.size());
     }
@@ -54,16 +54,16 @@ public class ActorsServiceImpl implements IActorsService {
     @Override
     public void saveActor(Actor film) {
         if (film.getIdActor() != null && film.getIdActor() > 0) {
-            template.put(URL, film);
+            template.put(url, film);
         } else {
             film.setIdActor(0);
-            template.postForObject(URL, film, String.class);
+            template.postForObject(url, film, String.class);
         }
     }
 
     @Override
     public void deleteActor(Integer idActor) {
-        template.delete(URL + "/" + idActor);
+        template.delete(url + "/" + idActor);
     }
 
 }
