@@ -50,18 +50,18 @@
 
         <div class="card" sec:authorize="hasRole('ROLE_ADMIN')">
             <div class="card-body">
-                <h3 class="card-title">Listado de críticas</h3>
+                <h3 class="card-title">Listado de reseñas</h3>
                 <a class="btn btn-link" th:href="@{/creviews/list}">
-                    Listado de críticas
+                    Listado de reseñas
                 </a>
             </div>
         </div>
 
         <div class="card" sec:authorize="hasRole('ROLE_USER')">
             <div class="card-body">
-                <h3 class="card-title">Listado de mis críticas</h3>
+                <h3 class="card-title">Listado de mis reseñas</h3>
                 <a class="btn btn-link" th:href="@{/creviews/list/currentUser}">
-                    Listado de críticas del usuario
+                    Listado de reseñas del usuario
                 </a>
             </div>
         </div>

@@ -15,8 +15,8 @@
         <div class="card-body">
             <div th:if="${msg != null}" class='alert alert-success' th:text="${msg}" role='alert'></div>
             <h4 class="card-title">
-                <a th:href="@{/creviews/new}" class="btn btn-primary btn-xs">Crear nueva crítica</a>
-                <a th:href="@{/creviews/list/currentUser}" class="btn btn-primary btn-xs">Ver tus críticas</a>
+                <a th:href="@{/creviews/new}" class="btn btn-primary btn-xs">Crear nueva reseña</a>
+                <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/creviews/list/currentUser}" class="btn btn-primary btn-xs">Ver tus críticas</a>
             </h4>
             <table class="table table-hover">
                 <thead class="thead-light">

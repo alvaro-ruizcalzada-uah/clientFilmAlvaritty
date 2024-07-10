@@ -70,7 +70,7 @@ public class ReviewsServiceImpl implements IReviewsService{
             review.setIdReview(0);
             review.setDate(LocalDate.now());
             template.postForObject(url, review, String.class);
-            return "¡Los datos de la review fueron guardados!";
+            return "¡Los datos de la reseña fueron guardados!";
         }
     }
 

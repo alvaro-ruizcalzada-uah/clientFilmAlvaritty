@@ -30,9 +30,7 @@
             <div class="mb-3">
                 <ul class="list-group">
                     <label class="form-label">Reparto</label>
-                    <a th:each="actor : ${film.cast}" th:href="@{/filmAlvaritty/actors/edit/} + ${actor.idActor}">
-                        <li class="list-group-item" th:text="${actor.name}"></li>
-                    </a>
+                    <li th:each="actor : ${film.cast}"  class="list-group-item" th:text="${actor.name}"></li>
                 </ul>
             </div>
 

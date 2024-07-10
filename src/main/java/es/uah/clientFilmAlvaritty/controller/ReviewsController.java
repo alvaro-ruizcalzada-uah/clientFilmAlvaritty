@@ -40,7 +40,7 @@ public class ReviewsController {
         Pageable pageable = PageRequest.of(page, 5);
         Page<Review> list = reviewsService.findAll(pageable);
         PageRender<Review> pageRender = new PageRender<Review>("/creviews/listReviews", list);
-        model.addAttribute("mainTitle", "Listado de todas las críticas");
+        model.addAttribute("mainTitle", "Listado de todas las reseñas");
         model.addAttribute("listReviews", list);
         model.addAttribute("page", pageRender);
         return "reviews/listReviews";
@@ -53,7 +53,7 @@ public class ReviewsController {
         List<Review> reviews = user != null ? user.getReviews() : Collections.emptyList();
         Page<Review> list = generatePage(reviews, pageable);
         PageRender<Review> pageRender = new PageRender<Review>("/creviews/listReviews", list);
-        model.addAttribute("mainTitle", "Listado de todas tus críticas");
+        model.addAttribute("mainTitle", "Listado de todas tus reseñas");
         model.addAttribute("listReviews", list);
         model.addAttribute("page", pageRender);
         return "reviews/listReviews";
@@ -62,7 +62,7 @@ public class ReviewsController {
     @GetMapping("/new")
     public String createReview(Model model) {
         Review review = new Review();
-        model.addAttribute("mainTitle", "Nueva crítica");
+        model.addAttribute("mainTitle", "Nueva reseña");
         model.addAttribute("review", review);
         return "reviews/formReview";
     }
@@ -74,7 +74,7 @@ public class ReviewsController {
             review.setUser(user);
         }
         String resultado = reviewsService.saveReview(review);
-        model.addAttribute("mainTitle", "Nueva crítica");
+        model.addAttribute("mainTitle", "Nueva reseña");
         attributes.addFlashAttribute("msg", resultado);
         if (isAdmin(user)) {
             return "redirect:/creviews/list";
@@ -88,9 +88,9 @@ public class ReviewsController {
         Review review = reviewsService.findReviewsById(id);
         if (review != null) {
             reviewsService.deleteReview(id);
-            attributes.addFlashAttribute("msg", "¡Los datos de la crítica fueron borrados!");
+            attributes.addFlashAttribute("msg", "¡Los datos de la reseña fueron borrados!");
         } else {
-            attributes.addFlashAttribute("msg", "¡Crítica no encontrada!");
+            attributes.addFlashAttribute("msg", "¡Reseña no encontrada!");
         }
 
         return "redirect:/creviews/list";
