@@ -23,19 +23,19 @@ public class ActorsServiceImpl implements IActorsService {
 
     @Override
     public Page<Actor> findAll(Pageable pageable) {
-        Actor[] films = template.getForObject(URL, Actor[].class);
-        List<Actor> filmsList = Arrays.asList(films);
+        Actor[] actors = template.getForObject(URL, Actor[].class);
+        List<Actor> actorsList = Arrays.asList(actors);
         int pageSize = pageable.getPageSize();
         int currentPage = pageable.getPageNumber();
         int startItem = currentPage * pageSize;
         List<Actor> list;
-        if (filmsList.size() < startItem) {
+        if (actorsList.size() < startItem) {
             list = Collections.emptyList();
         } else {
-            int toIndex = Math.min(startItem + pageSize, filmsList.size());
-            list = filmsList.subList(startItem, toIndex);
+            int toIndex = Math.min(startItem + pageSize, actorsList.size());
+            list = actorsList.subList(startItem, toIndex);
         }
-        return new PageImpl<>(list, PageRequest.of(currentPage, pageSize), filmsList.size());
+        return new PageImpl<>(list, PageRequest.of(currentPage, pageSize), actorsList.size());
     }
 
     @Override
@@ -46,8 +46,8 @@ public class ActorsServiceImpl implements IActorsService {
 
     @Override
     public Page<Actor> findActorsByName(String name, Pageable pageable) {
-        Actor[] films = template.getForObject(URL + "/name/" + name, Actor[].class);
-        List<Actor> list = Arrays.asList(films);
+        Actor[] actors = template.getForObject(URL + "/name/" + name, Actor[].class);
+        List<Actor> list = Arrays.asList(actors);
         return new PageImpl<>(list, pageable, list.size());
     }
 
