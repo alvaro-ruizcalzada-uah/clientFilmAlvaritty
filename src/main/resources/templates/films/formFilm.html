@@ -81,6 +81,14 @@
                     <textarea class="form-control" id="synopsis" name="synopsis" th:field="*{synopsis}"
                               placeholder="Sinopsis de la película"></textarea>
                 </div>
+                <div class="mb-3">
+                    <ul class="list-group">
+                        <label class="form-label">Reparto</label>
+                        <a th:each="actor : ${film.cast}" th:href="@{/filmAlvaritty/actors/edit/} + ${actor.idActor}">
+                            <li class="list-group-item" th:text="${actor.name}"></li>
+                        </a>
+                    </ul>
+                </div>
             </div>
             <div class="poster-preview">
                 <img id="posterPreview" th:src="'data:image/jpeg;base64,' + ${film.generateBase64Image()}" alt="Póster de la película">
@@ -111,6 +119,5 @@
         reader.readAsDataURL(event.target.files[0]);
     }
 </script>
-
 </body>
 </html>

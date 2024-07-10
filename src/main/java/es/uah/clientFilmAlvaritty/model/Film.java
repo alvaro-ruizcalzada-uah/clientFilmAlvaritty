@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.util.Base64;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -20,8 +21,10 @@ public class Film {
     private String genre;
     private String synopsis;
     private byte[] poster;
+    private List<Actor> cast;
 
     public String generateBase64Image() {
         return this.poster != null ? Base64.getEncoder().encodeToString(this.poster) : "";
     }
+
 }
