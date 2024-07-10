@@ -26,6 +26,7 @@ public class ReviewsServiceImpl implements IReviewsService{
 
     private final String url = "http://localhost:8090/api/usuarios/reviews";
 
+
     @Override
     public Page<Review> findAll(Pageable pageable) {
         Review[] reviews = template.getForObject(url, Review[].class);
@@ -47,23 +48,9 @@ public class ReviewsServiceImpl implements IReviewsService{
     }
 
     @Override
-    public Page<Review> findReviewsByIdFilm(Integer idFilm, Pageable pageable) {
-        Review[] reviews = template.getForObject(url+"/film/idFilm/"+idFilm, Review[].class);
-        List<Review> reviewsList = Arrays.asList(reviews);
-
-        int pageSize = pageable.getPageSize();
-        int currentPage = pageable.getPageNumber();
-        int startItem = currentPage * pageSize;
-        List<Review>list;
-
-        if(reviewsList.size() <startItem) {
-            list = Collections.emptyList();
-        } else {
-            int toIndex = Math.min(startItem + pageSize, reviewsList.size());
-            list = reviewsList.subList(startItem, toIndex);
-        }
-        Page<Review> page = new PageImpl<>(list, PageRequest.of(currentPage, pageSize), reviewsList.size());
-        return page;
+    public List<Review> findReviewsByIdFilm(Integer idFilm) {
+        Review[] reviews = template.getForObject(url+"/film/"+idFilm, Review[].class);
+        return Arrays.asList(reviews);
     }
 
     @Override
@@ -90,5 +77,12 @@ public class ReviewsServiceImpl implements IReviewsService{
     @Override
     public void deleteReview(Integer idReview) {
         template.delete(url+ "/" +  idReview);
+    }
+
+    @Override
+    public Double calculateAverageRating(Integer idFilm) {
+        Review[] reviews = template.getForObject(url+"/film/"+idFilm, Review[].class);
+        List<Review> reviewsList = Arrays.asList(reviews);
+        return reviewsList.stream().mapToInt(Review::getRating).average().orElse(0);
     }
 }

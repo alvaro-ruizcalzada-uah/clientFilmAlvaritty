@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<html xmlns:th="http://www.thymeleaf.org" lang="es"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>FilmAlvaritty | Gestión de películas</title>
@@ -21,18 +22,18 @@
                     <th scope="col">Género</th>
                     <th scope="col">Duración(min)</th>
                     <th scope="col">Año</th>
-                    <th scope="col">País</th>
+                    <th scope="col">País de origen</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="film : ${listFilms}">
-                    <td th:text="${film.idFilm}"></td>
+                    <td> <a class="btn btn-primary btn-xs" th:href="@{/filmAlvaritty/films/details/} + ${film.idFilm}" th:text="${film.idFilm}"></a></td>
                     <td th:text="${film.title}"></td>
                     <td th:text="${film.genre}"></td>
                     <td th:text="${film.runningTime}"></td>
                     <td th:text="${film.year}"></td>
                     <td th:text="${film.country}"></td>
-                    <td>
+                    <td sec:authorize="hasRole('ROLE_ADMIN')">
                         <a th:href="@{/filmAlvaritty/films/edit/{id}  (id=${film.idFilm})  }" th:text="'editar'" class="btn btn-success btn-sm" role="button" title="Editar la película."><i class="fas fa-pencil-alt" aria-hidden="true"></i></a>
                         <a th:href="@{/filmAlvaritty/films/delete/{id}  (id=${film.idFilm})   }" th:text="'borrar'" onclick="return confirm('¿Estas seguro?')" class="btn btn-danger btn-sm" role="button" title="Eliminar la película."><i class="fas fa-trash" aria-hidden="true"></i></a>
                     </td>
