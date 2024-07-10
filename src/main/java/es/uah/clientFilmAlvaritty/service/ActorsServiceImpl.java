@@ -23,7 +23,7 @@ public class ActorsServiceImpl implements IActorsService {
 
     @Override
     public Page<Actor> findAll(Pageable pageable) {
-        Actor[] actors = template.getForObject(URL, Actor[].class);
+        Actor[] actors = template.getForObject(url, Actor[].class);
         List<Actor> actorsList = Arrays.asList(actors);
         int pageSize = pageable.getPageSize();
         int currentPage = pageable.getPageNumber();
@@ -46,7 +46,7 @@ public class ActorsServiceImpl implements IActorsService {
 
     @Override
     public Page<Actor> findActorsByName(String name, Pageable pageable) {
-        Actor[] actors = template.getForObject(URL + "/name/" + name, Actor[].class);
+        Actor[] actors = template.getForObject(url + "/name/" + name, Actor[].class);
         List<Actor> list = Arrays.asList(actors);
         return new PageImpl<>(list, pageable, list.size());
     }
