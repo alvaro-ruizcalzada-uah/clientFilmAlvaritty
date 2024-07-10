@@ -27,6 +27,15 @@
                 <li class="list-group-item" th:text="'Puntuación: ' + ${averageRating}"></li>
             </ul>
 
+            <div class="mb-3">
+                <ul class="list-group">
+                    <label class="form-label">Reparto</label>
+                    <a th:each="actor : ${film.cast}" th:href="@{/filmAlvaritty/actors/edit/} + ${actor.idActor}">
+                        <li class="list-group-item" th:text="${actor.name}"></li>
+                    </a>
+                </ul>
+            </div>
+
             <ul class="list-group" th:each="review : ${reviewList}">
                 <li class="list-group-item active" th:text="'Crítica ' + ${review.idReview}"></li>
                 <li class="list-group-item" th:text="'Puntuación: ' + ${review.rating}"></li>
