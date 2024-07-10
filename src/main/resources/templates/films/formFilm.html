@@ -82,10 +82,12 @@
                               placeholder="Sinopsis de la película"></textarea>
                 </div>
                 <div class="mb-3">
-                    <label for="cast" class="form-label">Reparto</label>
-                    <select multiple class="form-select" id="cast" name="cast">
-                        <option th:each="actor : ${film.cast}" th:value="${actor.idActor}" th:text="${actor.name}"></option>
-                    </select>
+                    <ul class="list-group">
+                        <label class="form-label">Reparto</label>
+                        <a th:each="actor : ${film.cast}" th:href="@{/filmAlvaritty/actors/edit/} + ${actor.idActor}">
+                            <li class="list-group-item" th:text="${actor.name}"></li>
+                        </a>
+                    </ul>
                 </div>
             </div>
             <div class="poster-preview">
