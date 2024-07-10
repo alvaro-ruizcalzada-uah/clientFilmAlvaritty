@@ -71,7 +71,7 @@ public class FilmsController {
         Double averageRating = reviewsService.calculateAverageRating(idFilm);
         List<Review> reviewList = reviewsService.findReviewsByIdFilm(idFilm);
         model.addAttribute("film", film);
-        model.addAttribute("averageRating", averageRating);
+        model.addAttribute("averageRating", String.format("%.2f", averageRating));
         model.addAttribute("reviewList", reviewList);
         return "films/seeFilm";
     }
